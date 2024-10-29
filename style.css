@@ -1,0 +1,41 @@
+body {
+	font-family: Arial, sans-serif;
+	text-align: center;
+	background-color: #f0f0f0;
+}
+
+#board {
+	display: flex;
+	flex-direction: column;
+	margin: 20px auto;
+}
+
+.row {
+	display: flex;
+	justify-content: center;
+}
+
+.cell {
+	width: 40px;
+	height: 40px;
+	margin: 5px;
+	border: 1px solid #ccc;
+	font-size: 24px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.correct {
+	background-color: green;
+	color: white;
+}
+
+.wrong-position {
+	background-color: yellow;
+	color: black;
+}
+
+.wrong {
+	background-color: red;
+	color: white;
+}
