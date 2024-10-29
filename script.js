@@ -69,23 +69,38 @@ function resetGame() {
 	console.log(wordToGuess); // Für Debugging
 	createBoard();			
 	guessInput.style.display = 'inline';
+	guessInput.focus();
 }
 
 function submitGuess() {
 	const guess = guessInput.value.toUpperCase();
 	if (guess.length !== 5) {
-		alert("Bitte ein 5-buchstabiges Wort eingeben.");
+		//alert("Bitte ein 5-buchstabiges Wort eingeben.");
 		return;
 	}
 	if (attempts < maxAttempts) {
 		const row = board.children[attempts];
+		const letterCount = {}; // Zähler für Buchstaben im Wort
+		for (const letter of wordToGuess) {
+			letterCount[letter] = (letterCount[letter] || 0) + 1; // Zähle Vorkommen
+		}
 		for (let i = 0; i < 5; i++) {
 			const cell = row.children[i];
 			cell.textContent = guess[i];
 			if (guess[i] === wordToGuess[i]) {
 				cell.classList.add("correct");
-			} else if (wordToGuess.includes(guess[i])) {
+				letterCount[guess[i]]--; // Reduziere Zähler für korrektes Zeichen
+			}
+		}
+		for (let i = 0; i < 5; i++) {
+			const cell = row.children[i];
+			cell.textContent = guess[i];
+			
+			if (cell.classList.contains("correct")) continue; // Überspringe bereits richtige Buchstaben
+			
+			if (wordToGuess.includes(guess[i]) && letterCount[guess[i]] > 0) {
 				cell.classList.add("wrong-position");
+				letterCount[guess[i]]--; // Reduziere Zähler für korrektes Zeichen
 			} else {
 				cell.classList.add("wrong");
 			}
