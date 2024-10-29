@@ -26,16 +26,16 @@ body {
 }
 
 .correct {
-	background-color: green;
-	color: white;
+	background-color: #84e670;
+	color: black;
 }
 
 .wrong-position {
-	background-color: yellow;
+	background-color: #ffbc03;
 	color: black;
 }
 
 .wrong {
-	background-color: red;
+	background-color: gray;
 	color: white;
 }
