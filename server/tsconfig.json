@@ -1,0 +1,3 @@
+{
+  "extends": "../wordle/.nuxt/tsconfig.server.json"
+}
