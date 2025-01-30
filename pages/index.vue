@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import WordRow from "../components/WordRow.vue";
+import Keyboard from "../components/Keyboard.vue";
 import {reactive, onMounted} from "vue";
 
 const state = reactive({
@@ -17,9 +18,17 @@ const handleInput = (key) => {
   if(state.currentGuessIndex >= 6){
     return;
   }
-  const currentGuess = state.guesses[state.currentGuessIndex];
-  if(key == "{enter}"){
-    //send guess
+  let currentGuess = state.guesses[state.currentGuessIndex];
+  if(key == "{bksp}"){
+    //remove last letter
+    state.guesses[state.currentGuessIndex] = currentGuess.slice(0, -1);
+  } else if(currentGuess.length < 5){
+    const alphaRegex = /[a-zA-Z]/;
+    if(alphaRegex.test(key)){
+      state.guesses[state.currentGuessIndex] += key;
+    }
+    
+    currentGuess = state.guesses[state.currentGuessIndex];
     if(currentGuess.length == 5) {
       state.currentGuessIndex++;
       for (let i = 0; i < currentGuess.length; i++) {
@@ -32,14 +41,6 @@ const handleInput = (key) => {
           state.guessedLetters.miss.push(c);
         }
       }
-    }
-  }else if(key == "{bksp}"){
-    //remove last letter
-    state.guesses[state.currentGuessIndex] = currentGuess.slice(0, -1);
-  } else if(currentGuess.length < 5){
-    const alphaRegex = /[a-zA-Z]/;
-    if(alphaRegex.test(key)){
-      state.guesses[state.currentGuessIndex] += key;
     }
   }
 }
@@ -67,6 +68,13 @@ onMounted(() => {
         <div class="w-96 justify-evenly flex flex-col">
           <div>
             <WordRow v-for="(guess, i) in state.guesses" :key="i" :value="guess" :solution="state.solution" :submitted="i < state.currentGuessIndex"></WordRow>
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex justify-center p-5">
+        <div class="w-96 justify-evenly flex flex-col">
+          <div>
+            <Keyboard></Keyboard>
           </div>
         </div>
       </div>
