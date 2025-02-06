@@ -2,49 +2,40 @@
 import KeyboardCaps from "./KeyboardCaps.vue";
 import {ref, watch} from "vue";
 const props = defineProps({
-  value: String,
   solution: String,
-  submitted: Boolean
+  guessedLetters: Object
 })
-
-const colors = ref(["", "", "", "", ""]);
-
+const keyData = ref([''])
 const lettersRow1 = new Map([
-  ['q', 'gray'],
-  ['w', 'gray'],
-  ['e', 'gray'],
+  ['b', 'gray'],
+  ['o', 'gray'],
+  ['k', 'gray'],
   ['r', 'gray']
 ]);
+
+console.log(props.solution)
+
 watch(
-    () => props.submitted,
-    async (submitted, prevSubmitted) => {
-       let s = props.solution;
-       let v = props.value;
-       let temp = ["gray","gray","gray","gray","gray"]
-       let letterPool = [];
-       for( let i = 0; i< 5; i++){
-         if(s.charAt(i) == v.charAt(i)){
-           temp[i] = "green"
-         } else {
-           letterPool.push(s.charAt(i));
-         }
-       }
-       for( let i = 0; i< 5; i++){
-         if(temp[i] == "gray"){
-           if(letterPool.indexOf(v.charAt(i)) != -1 ){
-             letterPool.splice(letterPool.indexOf(v.charAt(i)),1);
-             temp[i] = "yellow"
-           }
-         }
-         colors.value[i] = temp[i];
-       }
+  () => props.guessedLetters, 
+  (newVal) => {
+    console.log('Guessed Letters updated:', newVal);
+    const { found, hint, miss} = props.guessedLetters;
+    console.log(found)
+    for(const letter of found) {
+      console.log(letter)
+      if(lettersRow1.has(letter)) {
+        lettersRow1.set(letter, 'green')
+      }
     }
-)
+  },
+  { deep: true } // Da es sich um ein Objekt handelt, müssen wir `deep` verwenden
+);
+
 </script>
 
 <template>
   <div class="grid grid-cols-5 gap-1 mx-auto mb-1">
-    <keyboard-caps v-for="(value, key) in lettersRow1" :key="key" :data="value" />
+    <keyboard-caps v-for="(value, key) in lettersRow1" :key="key" :keyData="value" />
   </div>
 </template>
 

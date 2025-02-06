@@ -74,7 +74,7 @@ onMounted(() => {
       <div class="w-full flex justify-center p-5">
         <div class="w-96 justify-evenly flex flex-col">
           <div>
-            <Keyboard></Keyboard>
+            <Keyboard :solution="state.solution" :guessedLetters="state.guessedLetters"></Keyboard>
           </div>
         </div>
       </div>
