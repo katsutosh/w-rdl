@@ -57,7 +57,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-screen h-screen select-none flex text-gray-300">
+  <div class="w-screen h-full select-none flex text-gray-300">
     <div class="w-full h-full bg-slate-700 flex flex-col">
       <div class="w-full h-12 flex-shrink-0 flex justify-between bg-black bg-opacity-20">
         <div class="h-full flex-shrink-0 flex items-center px-4">
