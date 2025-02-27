@@ -58,30 +58,53 @@ watch(
       }
     }
     
+    const getLetterColor = (letter: string) => {
+      if(lettersRow1.has(letter)) {
+        return lettersRow1.get(letter)
+      }
+      if(lettersRow2.has(letter)) {
+        return lettersRow2.get(letter)
+      }
+      if(lettersRow3.has(letter)) {
+        return lettersRow3.get(letter)
+      }
+    }
+
     const { found, hint, miss} = props.guessedLetters;
-    for(const letter of found) {
-      setLetterColor(letter, 'green')    
-    }
-    
-    for(const letter of hint) {
-      setLetterColor(letter, 'yellow')    
-    }
-    
     for(const letter of miss) {
-      setLetterColor(letter, 'gray')    
-    }    
+      setLetterColor(letter, 'gray')
+    }
+    for(const letter of hint) {
+      const currentColor = getLetterColor(letter);
+      if(['gray'].includes(currentColor)) {
+        setLetterColor(letter, 'yellow')
+      }
+    } 
+    for(const letter of found) {
+      const currentColor = getLetterColor(letter);
+      if(['gray', 'yellow'].includes(currentColor)) {
+        setLetterColor(letter, 'green')
+      }   
+    }
   },
   { deep: true } // Da es sich um ein Objekt handelt, müssen wir `deep` verwenden
-
 );
 
 </script>
 
 <template>
-  <div class="grid grid-cols-11 gap-1 mx-auto mb-1">
-    <keyboard-caps v-for="(value, key) in lettersRow1" :key="value[1]" :color="value[1]" :content="value[0]" />
-    <keyboard-caps v-for="(value, key) in lettersRow2" :key="value[1]" :color="value[1]" :content="value[0]" />
-    <keyboard-caps v-for="(value, key) in lettersRow3" :key="value[1]" :color="value[1]" :content="value[0]" />
+
+
+  <div class="flex flex-col gap-1 p-4 w-full">
+    <div class="flex gap-1 w-full">
+     <keyboard-caps v-for="(value, key) in lettersRow1" :key="value[1]" :color="value[1]" :content="value[0]" />
+    </div>
+    <div class="flex gap-1 w-full">
+      <keyboard-caps v-for="(value, key) in lettersRow2" :key="value[1]" :color="value[1]" :content="value[0]" />
+    </div>
+    <div class="flex gap-1 w-full">
+     <keyboard-caps v-for="(value, key) in lettersRow3" :key="value[1]" :color="value[1]" :content="value[0]" />
+    </div>
   </div>
 </template>
 

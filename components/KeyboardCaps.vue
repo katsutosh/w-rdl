@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="col-span-1 flex items-center justify-center h-8 uppercase border-2 transition-all duration-300"
+  <div class="w-8 h-8 flex px-4 rounded-sm items-center justify-center uppercase border-2 transition-all duration-300"
   :class="{
     'border-gray-500 bg-gray-500 text-white': color == 'gray',
     'border-green-500 bg-green-500 text-white': color == 'green',
